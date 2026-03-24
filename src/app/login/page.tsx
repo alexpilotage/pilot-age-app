@@ -17,18 +17,40 @@ export default function LoginPage() {
     setLoading(true);
     setError(null);
 
-    const { error } = await supabase.auth.signInWithPassword({
+    const { data, error: signInError } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
 
-    if (error) {
+    if (signInError) {
       setError("Email ou mot de passe incorrect");
       setLoading(false);
       return;
     }
 
-    window.location.href = "/";
+    // Role-based redirect
+    const userId = data.user?.id;
+    if (userId) {
+      const { data: profile } = await supabase
+        .from("profiles")
+        .select("role")
+        .eq("id", userId)
+        .single();
+
+      if (profile?.role === "super_admin") {
+        window.location.href = "/admin";
+        return;
+      } else if (profile?.role === "admin_entreprise") {
+        window.location.href = "/dashboard";
+        return;
+      } else if (profile?.role === "salarie") {
+        window.location.href = "/espace";
+        return;
+      }
+    }
+
+    // Fallback
+    window.location.href = "/admin";
   }
 
   async function handleGoogleLogin() {
@@ -50,10 +72,10 @@ export default function LoginPage() {
       <div className="w-full max-w-sm space-y-8">
         <div className="text-center">
           <h1 className="text-3xl font-bold tracking-tight">
-            Pilot-<span className="text-primary">Âge</span>
+            Pilot-<span className="text-primary">\u00c2ge</span>
           </h1>
           <p className="mt-2 text-sm text-muted-foreground">
-            Connectez-vous à votre espace
+            Connectez-vous \u00e0 votre espace
           </p>
         </div>
 
@@ -122,7 +144,7 @@ export default function LoginPage() {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="••••••••"
+              placeholder="\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022"
               required
               className="w-full rounded-lg border border-input bg-card px-3 py-2.5 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
             />
@@ -143,21 +165,9 @@ export default function LoginPage() {
 
         <p className="text-center text-sm text-muted-foreground">
           <Link href="/" className="text-primary hover:underline">
-            ← Retour à l&apos;accueil
+            \u2190 Retour \u00e0 l'accueil
           </Link>
         </p>
-
-        {process.env.NODE_ENV === "development" && (
-          <div className="rounded-lg border border-dashed border-orange-300 bg-orange-50 p-3 text-center">
-            <p className="text-xs font-medium text-orange-700">⚠️ Mode développement</p>
-            <Link
-              href="/dev-login"
-              className="mt-1 inline-block text-sm font-semibold text-orange-700 underline hover:text-orange-900"
-            >
-              Connexion rapide par rôle →
-            </Link>
-          </div>
-        )}
       </div>
     </div>
   );
