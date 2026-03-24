@@ -4,7 +4,7 @@ import { NextResponse, type NextRequest } from "next/server";
 type CookieToSet = { name: string; value: string; options?: Record<string, unknown> };
 
 // Routes that don't require authentication
-const PUBLIC_ROUTES = ["/", "/login", "/register", "/auth/callback"];
+const PUBLIC_ROUTES = ["/", "/login", "/register", "/auth/callback", "/dev-login"];
 
 // Routes accessible via QR code (anonymous)
 const QUESTIONNAIRE_ROUTE = /^\/q\/[a-zA-Z0-9-]+/;
@@ -22,7 +22,26 @@ export async function middleware(request: NextRequest) {
     return await updateSession(request);
   }
 
-  // For protected routes, check auth
+  // === DEV MODE: bypass auth with dev-role cookie ===
+  const isDev = process.env.NODE_ENV === "development";
+  const devRole = request.cookies.get("dev-role")?.value;
+
+  if (isDev && devRole) {
+    const response = NextResponse.next({ request });
+
+    // Role-based routing for dev mode
+    if (pathname.startsWith("/admin") && devRole !== "super_admin") {
+      return NextResponse.redirect(new URL("/dashboard", request.url));
+    }
+
+    if (pathname.startsWith("/dashboard") && devRole === "salarie") {
+      return NextResponse.redirect(new URL("/espace", request.url));
+    }
+
+    return response;
+  }
+
+  // === PRODUCTION: Supabase auth ===
   const response = await updateSession(request);
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,

@@ -37,7 +37,7 @@ export default function LoginPage() {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: `${window.location.origin}/auth/callback`,
+        redirectTo: window.location.origin + "/auth/callback",
       },
     });
     if (error) {
@@ -52,10 +52,10 @@ export default function LoginPage() {
         {/* Header */}
         <div className="text-center">
           <h1 className="text-3xl font-bold tracking-tight">
-            Pilot-<span className="text-primary">Âge</span>
+            Pilot-<span className="text-primary">\u00c2ge</span>
           </h1>
           <p className="mt-2 text-sm text-muted-foreground">
-            Connectez-vous à votre espace
+            Connectez-vous \u00e0 votre espace
           </p>
         </div>
 
@@ -127,7 +127,7 @@ export default function LoginPage() {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="••••••••"
+              placeholder="\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022"
               required
               className="w-full rounded-lg border border-input bg-card px-3 py-2.5 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
             />
@@ -148,9 +148,22 @@ export default function LoginPage() {
 
         <p className="text-center text-sm text-muted-foreground">
           <Link href="/" className="text-primary hover:underline">
-            ← Retour à l&apos;accueil
+            \u2190 Retour \u00e0 l&apos;accueil
           </Link>
         </p>
+
+        {/* Dev mode quick access */}
+        {process.env.NODE_ENV === "development" && (
+          <div className="rounded-lg border border-dashed border-orange-300 bg-orange-50 p-3 text-center">
+            <p className="text-xs font-medium text-orange-700">\u26a0\ufe0f Mode d\u00e9veloppement</p>
+            <Link
+              href="/dev-login"
+              className="mt-1 inline-block text-sm font-semibold text-orange-700 underline hover:text-orange-900"
+            >
+              Connexion rapide par r\u00f4le \u2192
+            </Link>
+          </div>
+        )}
       </div>
     </div>
   );
