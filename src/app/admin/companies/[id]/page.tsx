@@ -31,13 +31,10 @@ export default async function CompanyDetailPage({
     .select("*")
     .eq("organization_id", id);
 
-  return (
-    <CompanyDetail
-      company=
-        ...company,
-        sessions: sessions || [],
-        users: users || [],
-      
-    />
-  );
+  const companyData = Object.assign({}, company, {
+    sessions: sessions || [],
+    users: users || [],
+  });
+
+  return <CompanyDetail company={companyData} />;
 }
