@@ -34,14 +34,18 @@ const PROFILES = {
   },
 };
 
+const motionInitial = { opacity: 0, y: 30 };
+const motionAnimate = { opacity: 1, y: 0 };
+const motionTransition = { duration: 0.5 };
+
 export function ResultCard({ score, profileType }: ResultCardProps) {
   const profile = PROFILES[profileType];
 
   return (
     <motion.div
-      initial= opacity: 0, y: 30 
-      animate= opacity: 1, y: 0 
-      transition= duration: 0.5 
+      initial={motionInitial}
+      animate={motionAnimate}
+      transition={motionTransition}
       className={`rounded-2xl p-8 ${profile.color} border border-[#E8E8E6]`}
     >
       <div className="text-center">

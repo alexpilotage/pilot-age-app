@@ -7,6 +7,8 @@ interface ProgressBarProps {
   total: number;
 }
 
+const transitionConfig = { duration: 0.4, ease: "easeOut" as const };
+
 export function ProgressBar({ current, total }: ProgressBarProps) {
   const percentage = total > 0 ? Math.round((current / total) * 100) : 0;
 
@@ -25,7 +27,7 @@ export function ProgressBar({ current, total }: ProgressBarProps) {
           className="h-full bg-[#FFCF02] rounded-full"
           initial={false}
           animate={{ width: `${percentage}%` }}
-          transition= duration: 0.4, ease: "easeOut" 
+          transition={transitionConfig}
         />
       </div>
     </div>

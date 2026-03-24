@@ -22,6 +22,8 @@ const cardVariants = {
   exit: { opacity: 0, x: -40 },
 };
 
+const cardTransition = { duration: 0.3 };
+
 export function QuestionCard({
   question,
   answer,
@@ -35,7 +37,7 @@ export function QuestionCard({
       initial="enter"
       animate="center"
       exit="exit"
-      transition= duration: 0.3 
+      transition={cardTransition}
       className="bg-white rounded-2xl p-8 shadow-sm border border-[#E8E8E6]"
     >
       <p className="text-lg font-medium text-[#181818] mb-8 leading-relaxed">
