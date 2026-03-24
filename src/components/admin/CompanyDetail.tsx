@@ -36,6 +36,8 @@ const SESSION_STATUS_LABELS: Record<string, string> = {
   closed: "Termin\u00e9e",
 };
 
+const QR_API_BASE = "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=";
+
 interface CompanyDetailProps {
   company: Organization & {
     sessions: QuestionnaireSession[];
@@ -48,13 +50,14 @@ export function CompanyDetail({ company }: CompanyDetailProps) {
   const [deleting, setDeleting] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 
-  const questionnaireUrl = `${process.env.NEXT_PUBLIC_APP_URL || "https://app.pilot-age.fr"}/q/${company.slug}`;
-  const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(questionnaireUrl)}`;
+  const appUrl = process.env.NEXT_PUBLIC_APP_URL || "https://app.pilot-age.fr";
+  const questionnaireUrl = appUrl + "/q/" + company.slug;
+  const qrCodeUrl = QR_API_BASE + encodeURIComponent(questionnaireUrl);
 
   const handleDelete = async () => {
     setDeleting(true);
     try {
-      const res = await fetch(`/api/admin/companies/${company.id}`, {
+      const res = await fetch("/api/admin/companies/" + company.id, {
         method: "DELETE",
       });
       if (res.ok) {
@@ -87,9 +90,10 @@ export function CompanyDetail({ company }: CompanyDetailProps) {
             <div className="flex items-center gap-3">
               <h1 className="text-2xl font-bold">{company.name}</h1>
               <span
-                className={`rounded-full px-2.5 py-0.5 text-xs font-medium ${
-                  STATUS_COLORS[company.subscription_status] || ""
-                }`}
+                className={
+                  "rounded-full px-2.5 py-0.5 text-xs font-medium " +
+                  (STATUS_COLORS[company.subscription_status] || "")
+                }
               >
                 {STATUS_LABELS[company.subscription_status] ||
                   company.subscription_status}
@@ -102,7 +106,7 @@ export function CompanyDetail({ company }: CompanyDetailProps) {
         </div>
         <div className="flex items-center gap-2">
           <Link
-            href={`/admin/companies/${company.id}/edit`}
+            href={"/admin/companies/" + company.id + "/edit"}
             className="inline-flex items-center gap-1.5 rounded-[100px] border border-border px-4 py-2 text-sm font-medium transition-colors hover:bg-muted"
           >
             <Pencil className="h-3.5 w-3.5" />
@@ -165,7 +169,7 @@ export function CompanyDetail({ company }: CompanyDetailProps) {
         <div className="flex items-start gap-6">
           <img
             src={qrCodeUrl}
-            alt={`QR Code pour ${company.name}`}
+            alt={"QR Code pour " + company.name}
             width={160}
             height={160}
             className="rounded-lg border border-border"
@@ -181,14 +185,14 @@ export function CompanyDetail({ company }: CompanyDetailProps) {
             </div>
             <p className="text-xs text-muted-foreground">
               Partagez ce lien ou imprimez le QR code pour permettre aux
-              salari\u00e9s d\u2019acc\u00e9der au questionnaire.
+              salari&eacute;s d&rsquo;acc&eacute;der au questionnaire.
             </p>
             <a
               href={qrCodeUrl}
-              download={`qrcode-${company.slug}.png`}
+              download={"qrcode-" + company.slug + ".png"}
               className="inline-flex items-center gap-1.5 rounded-[100px] border border-border px-4 py-2 text-xs font-medium transition-colors hover:bg-muted"
             >
-              T\u00e9l\u00e9charger le QR code
+              T&eacute;l&eacute;charger le QR code
             </a>
           </div>
         </div>
@@ -225,18 +229,19 @@ export function CompanyDetail({ company }: CompanyDetailProps) {
                     {new Date(session.created_at).toLocaleDateString(
                       "fr-FR"
                     )}{" "}
-                    \u00b7 {session.participant_count} participant
+                    &middot; {session.participant_count} participant
                     {session.participant_count !== 1 ? "s" : ""}
                   </p>
                 </div>
                 <span
-                  className={`rounded-full px-2.5 py-0.5 text-xs font-medium ${
-                    session.status === "active"
+                  className={
+                    "rounded-full px-2.5 py-0.5 text-xs font-medium " +
+                    (session.status === "active"
                       ? "bg-green-100 text-green-700"
                       : session.status === "draft"
                         ? "bg-gray-100 text-gray-700"
-                        : "bg-red-100 text-red-700"
-                  }`}
+                        : "bg-red-100 text-red-700")
+                  }
                 >
                   {SESSION_STATUS_LABELS[session.status] ||
                     session.status}
@@ -255,7 +260,7 @@ export function CompanyDetail({ company }: CompanyDetailProps) {
         </h2>
         {company.users.length === 0 ? (
           <p className="text-sm text-muted-foreground">
-            Aucun utilisateur rattach\u00e9.
+            Aucun utilisateur rattach&eacute;.
           </p>
         ) : (
           <div className="space-y-2">
@@ -294,8 +299,8 @@ export function CompanyDetail({ company }: CompanyDetailProps) {
               Supprimer cette entreprise ?
             </h3>
             <p className="mt-2 text-sm text-muted-foreground">
-              Cette action est irr\u00e9versible. Toutes les sessions et
-              donn\u00e9es associ\u00e9es seront supprim\u00e9es.
+              Cette action est irr&eacute;versible. Toutes les sessions et
+              donn&eacute;es associ&eacute;es seront supprim&eacute;es.
             </p>
             <div className="mt-6 flex items-center justify-end gap-3">
               <button
