@@ -35,7 +35,7 @@ const NAV_ITEMS: Record<UserRole, NavItem[]> = {
   ],
   admin_entreprise: [
     { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
-    { label: "Sessions", href: "/dashboard/sessions", icon: ClipboardList },
+    { label: "Questionnaire", href: "/dashboard/questionnaire", icon: ClipboardList },
     { label: "Rapports", href: "/dashboard/rapports", icon: FileText },
     { label: "Formations", href: "/dashboard/formations", icon: GraduationCap },
     { label: "Paramètres", href: "/dashboard/settings", icon: Settings },
