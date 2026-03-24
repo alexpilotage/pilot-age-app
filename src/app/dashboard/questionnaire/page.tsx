@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import Link from "next/link";
-import { Plus, QrCode, Users, Calendar, ChevronRight } from "lucide-react";
+import { Plus, QrCode, Users, Calendar, ChevronRight, Radio } from "lucide-react";
+import { createClient } from "@/lib/supabase/client";
 
 interface Session {
   id: string;
@@ -25,11 +26,7 @@ export default function QuestionnaireDashboard() {
   const [loading, setLoading] = useState(true);
   const [creating, setCreating] = useState(false);
 
-  useEffect(() => {
-    fetchSessions();
-  }, []);
-
-  async function fetchSessions() {
+  const fetchSessions = useCallback(async () => {
     try {
       const res = await fetch("/api/questionnaire/sessions");
       if (res.ok) {
@@ -39,7 +36,36 @@ export default function QuestionnaireDashboard() {
     } finally {
       setLoading(false);
     }
-  }
+  }, []);
+
+  useEffect(() => {
+    fetchSessions();
+  }, [fetchSessions]);
+
+  // Realtime: listen for new responses across all sessions
+  useEffect(() => {
+    const supabase = createClient();
+
+    const channel = supabase
+      .channel("all-questionnaire-responses")
+      .on(
+        "postgres_changes",
+        {
+          event: "INSERT",
+          schema: "public",
+          table: "questionnaire_responses",
+        },
+        () => {
+          // Refresh sessions to update participant counts
+          fetchSessions();
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [fetchSessions]);
 
   async function createSession() {
     setCreating(true);
@@ -55,15 +81,25 @@ export default function QuestionnaireDashboard() {
     }
   }
 
+  const hasActiveSessions = sessions.some((s) => s.status === "active");
+
   return (
     <div className="space-y-8">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-[#181818] font-[family-name:var(--font-playfair)]">
-            Questionnaires
-          </h1>
+          <div className="flex items-center gap-3">
+            <h1 className="text-2xl font-bold text-[#181818] font-[family-name:var(--font-playfair)]">
+              Questionnaires
+            </h1>
+            {hasActiveSessions && (
+              <span className="inline-flex items-center gap-1.5 text-xs font-medium text-green-600 bg-green-50 px-3 py-1.5 rounded-full">
+                <Radio size={12} className="animate-pulse" />
+                Temps r\u00e9el actif
+              </span>
+            )}
+          </div>
           <p className="text-[#6B6B6B] mt-1">
-            Gérez vos sessions de questionnaire aidants
+            G\u00e9rez vos sessions de questionnaire aidants
           </p>
         </div>
         <button
@@ -72,7 +108,7 @@ export default function QuestionnaireDashboard() {
           className="flex items-center gap-2 px-5 py-2.5 bg-[#FFCF02] text-[#181818] font-semibold rounded-xl hover:bg-[#e6ba00] transition-all disabled:opacity-50"
         >
           <Plus size={18} />
-          {creating ? "Création..." : "Nouvelle session"}
+          {creating ? "Cr\u00e9ation..." : "Nouvelle session"}
         </button>
       </div>
 
@@ -87,7 +123,7 @@ export default function QuestionnaireDashboard() {
             Aucune session
           </h3>
           <p className="text-[#6B6B6B] mb-6">
-            Créez votre première session pour déployer le questionnaire
+            Cr\u00e9ez votre premi\u00e8re session pour d\u00e9ployer le questionnaire
           </p>
           <button
             onClick={createSession}
@@ -95,7 +131,7 @@ export default function QuestionnaireDashboard() {
             className="px-6 py-3 bg-[#FFCF02] text-[#181818] font-semibold rounded-xl hover:bg-[#e6ba00] transition-all"
           >
             <Plus size={18} className="inline mr-2" />
-            Créer une session
+            Cr\u00e9er une session
           </button>
         </div>
       ) : (
@@ -122,6 +158,9 @@ export default function QuestionnaireDashboard() {
                       >
                         {status.label}
                       </span>
+                      {session.status === "active" && (
+                        <Radio size={12} className="text-green-500 animate-pulse" />
+                      )}
                     </div>
                     <div className="flex items-center gap-4 text-sm text-[#6B6B6B]">
                       <span className="flex items-center gap-1">
