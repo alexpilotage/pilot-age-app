@@ -4,8 +4,10 @@ import { requireSuperAdmin } from "@/lib/auth";
 
 // GET — List all questions ordered by order_index
 export async function GET() {
-  const authError = await requireSuperAdmin();
-  if (authError) return authError;
+  const auth = await requireSuperAdmin();
+  if (!auth) {
+    return NextResponse.json({ error: "Non autoris\u00e9" }, { status: 401 });
+  }
 
   const supabase = createAdminClient();
 
@@ -23,8 +25,10 @@ export async function GET() {
 
 // POST — Create a new question
 export async function POST(request: Request) {
-  const authError = await requireSuperAdmin();
-  if (authError) return authError;
+  const auth = await requireSuperAdmin();
+  if (!auth) {
+    return NextResponse.json({ error: "Non autoris\u00e9" }, { status: 401 });
+  }
 
   const supabase = createAdminClient();
   const body = await request.json();

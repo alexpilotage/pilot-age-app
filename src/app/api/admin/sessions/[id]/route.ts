@@ -7,8 +7,10 @@ export async function GET(
   request: Request,
   context: { params: Promise<{ id: string }> }
 ) {
-  const authError = await requireSuperAdmin();
-  if (authError) return authError;
+  const auth = await requireSuperAdmin();
+  if (!auth) {
+    return NextResponse.json({ error: "Non autoris\u00e9" }, { status: 401 });
+  }
 
   const resolvedParams = await context.params;
   const id = resolvedParams.id;
@@ -22,7 +24,7 @@ export async function GET(
 
   if (error || !session) {
     return NextResponse.json(
-      { error: "Session non trouvée" },
+      { error: "Session non trouv\u00e9e" },
       { status: 404 }
     );
   }
@@ -43,8 +45,10 @@ export async function PATCH(
   request: Request,
   context: { params: Promise<{ id: string }> }
 ) {
-  const authError = await requireSuperAdmin();
-  if (authError) return authError;
+  const auth = await requireSuperAdmin();
+  if (!auth) {
+    return NextResponse.json({ error: "Non autoris\u00e9" }, { status: 401 });
+  }
 
   const resolvedParams = await context.params;
   const id = resolvedParams.id;
@@ -81,8 +85,10 @@ export async function DELETE(
   request: Request,
   context: { params: Promise<{ id: string }> }
 ) {
-  const authError = await requireSuperAdmin();
-  if (authError) return authError;
+  const auth = await requireSuperAdmin();
+  if (!auth) {
+    return NextResponse.json({ error: "Non autoris\u00e9" }, { status: 401 });
+  }
 
   const resolvedParams = await context.params;
   const id = resolvedParams.id;
