@@ -1,13 +1,9 @@
 import type { Metadata } from "next";
 import { Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
+import { cn } from "@/lib/utils";
 
-const inter = Inter({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-  variable: "--font-sans",
-  display: "swap",
-});
+const inter = Inter({subsets:['latin'],variable:'--font-sans'});
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -32,7 +28,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="fr" className={`${inter.variable} ${playfair.variable}`}>
+    <html lang="fr" className={cn(playfair.variable, "font-sans", inter.variable)}>
       <body className="min-h-screen bg-background font-sans antialiased">
         {children}
       </body>
