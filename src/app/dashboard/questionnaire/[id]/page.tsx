@@ -94,7 +94,7 @@ export default function SessionDetailPage({
   if (!session || !stats) {
     return (
       <div className="text-center py-20">
-        <p className="text-[#6B6B6B]">Session non trouv\u00e9e</p>
+        <p className="text-[#6B6B6B]">Session non trouvée</p>
       </div>
     );
   }
@@ -108,7 +108,6 @@ export default function SessionDetailPage({
 
   return (
     <div className="space-y-8">
-      {/* Back */}
       <Link
         href="/dashboard/questionnaire"
         className="inline-flex items-center gap-2 text-[#6B6B6B] hover:text-[#181818] transition-colors"
@@ -117,20 +116,16 @@ export default function SessionDetailPage({
         Retour aux sessions
       </Link>
 
-      {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1
-            className="text-2xl font-bold text-[#181818] flex items-center gap-3"
-            style= fontFamily: "var(--font-playfair)" 
-          >
+          <h1 className="text-2xl font-bold text-[#181818] flex items-center gap-3 font-[family-name:var(--font-playfair)]">
             Session
-            <span className="font-mono bg-[#F7F7F5] px-3 py-1 rounded-lg text-xl">
+            <span className="font-mono bg-[#F7F7F5] px-3 py-1 rounded-lg text-xl font-sans">
               {session.code}
             </span>
           </h1>
           <p className="text-[#6B6B6B] mt-1">
-            Cr\u00e9\u00e9e le{" "}
+            Créée le{" "}
             {new Date(session.created_at).toLocaleDateString("fr-FR", {
               day: "numeric",
               month: "long",
@@ -146,12 +141,11 @@ export default function SessionDetailPage({
             className="flex items-center gap-2 px-5 py-2.5 bg-red-50 text-red-600 font-medium rounded-xl hover:bg-red-100 transition-all"
           >
             <XCircle size={18} />
-            {closing ? "Fermeture..." : "Cl\u00f4turer la session"}
+            {closing ? "Fermeture..." : "Clôturer la session"}
           </button>
         )}
       </div>
 
-      {/* QR Code + Link */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="bg-white rounded-2xl border border-[#E8E8E6] p-8 text-center">
           <h3 className="font-semibold text-[#181818] mb-4 flex items-center justify-center gap-2">
@@ -167,7 +161,7 @@ export default function SessionDetailPage({
             className="mx-auto rounded-xl"
           />
           <p className="text-sm text-[#6B6B6B] mt-4">
-            Imprimez ou partagez ce QR code avec vos salari\u00e9s
+            Imprimez ou partagez ce QR code avec vos salariés
           </p>
         </div>
 
@@ -197,23 +191,19 @@ export default function SessionDetailPage({
 
           <div className="mt-6 p-4 bg-[#FFCF02]/10 rounded-xl">
             <p className="text-sm font-medium text-[#181818]">
-              \ud83d\udd12 100% anonyme
+              🔒 100% anonyme
             </p>
             <p className="text-xs text-[#6B6B6B] mt-1">
-              Aucune donn\u00e9e personnelle n\u2019est collect\u00e9e. Les r\u00e9ponses sont
-              enti\u00e8rement anonymes.
+              Aucune donnée personnelle n&apos;est collectée. Les réponses sont
+              entièrement anonymes.
             </p>
           </div>
         </div>
       </div>
 
-      {/* Stats */}
       <div>
-        <h2
-          className="text-xl font-bold text-[#181818] mb-4"
-          style= fontFamily: "var(--font-playfair)" 
-        >
-          R\u00e9sultats
+        <h2 className="text-xl font-bold text-[#181818] mb-4 font-[family-name:var(--font-playfair)]">
+          Résultats
         </h2>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -242,46 +232,9 @@ export default function SessionDetailPage({
         {stats.total > 0 && (
           <div className="mt-6 bg-white rounded-2xl border border-[#E8E8E6] p-6">
             <h3 className="font-semibold text-[#181818] mb-4">
-              R\u00e9partition des profils
+              Répartition des profils
             </h3>
-            <div className="flex h-8 rounded-full overflow-hidden bg-[#F0F0EE]">
-              {stats.aidant_probable > 0 && (
-                <div
-                  className="bg-[#FFCF02] flex items-center justify-center text-xs font-bold text-[#181818]"
-                  style={{
-                    width: `${(stats.aidant_probable / stats.total) * 100}%`,
-                  }}
-                >
-                  {Math.round((stats.aidant_probable / stats.total) * 100)}%
-                </div>
-              )}
-              {stats.aidant_possible > 0 && (
-                <div
-                  className="bg-orange-400 flex items-center justify-center text-xs font-bold text-white"
-                  style={{
-                    width: `${(stats.aidant_possible / stats.total) * 100}%`,
-                  }}
-                >
-                  {Math.round((stats.aidant_possible / stats.total) * 100)}%
-                </div>
-              )}
-              {stats.non_aidant > 0 && (
-                <div
-                  className="bg-green-500 flex items-center justify-center text-xs font-bold text-white"
-                  style={{
-                    width: `${(stats.non_aidant / stats.total) * 100}%`,
-                  }}
-                >
-                  {Math.round((stats.non_aidant / stats.total) * 100)}%
-                </div>
-              )}
-            </div>
-            <div className="flex justify-between mt-3 text-xs text-[#6B6B6B]">
-              <span>\u2b24 Aidant probable</span>
-              <span>\u2b24 Aidant possible</span>
-              <span>\u2b24 Non aidant</span>
-            </div>
-
+            <BarChart stats={stats} />
             <div className="mt-6 text-center">
               <span className="text-sm text-[#6B6B6B]">Score moyen</span>
               <p className="text-3xl font-bold text-[#181818]">
@@ -296,13 +249,44 @@ export default function SessionDetailPage({
           <div className="text-center py-12 bg-white rounded-2xl border border-[#E8E8E6]">
             <Users size={40} className="mx-auto text-[#E8E8E6] mb-3" />
             <p className="text-[#6B6B6B]">
-              Aucune r\u00e9ponse pour le moment. Partagez le QR code ou le lien
-              avec vos salari\u00e9s.
+              Aucune réponse pour le moment. Partagez le QR code ou le lien
+              avec vos salariés.
             </p>
           </div>
         )}
       </div>
     </div>
+  );
+}
+
+function BarChart({ stats }: { stats: Stats }) {
+  const items = [
+    { key: "aidant_probable", count: stats.aidant_probable, color: "bg-[#FFCF02]", textColor: "text-[#181818]", label: "⬤ Aidant probable" },
+    { key: "aidant_possible", count: stats.aidant_possible, color: "bg-orange-400", textColor: "text-white", label: "⬤ Aidant possible" },
+    { key: "non_aidant", count: stats.non_aidant, color: "bg-green-500", textColor: "text-white", label: "⬤ Non aidant" },
+  ];
+
+  return (
+    <>
+      <div className="flex h-8 rounded-full overflow-hidden bg-[#F0F0EE]">
+        {items.map((item) =>
+          item.count > 0 ? (
+            <div
+              key={item.key}
+              className={`${item.color} flex items-center justify-center text-xs font-bold ${item.textColor}`}
+              style={{ width: `${(item.count / stats.total) * 100}%` }}
+            >
+              {Math.round((item.count / stats.total) * 100)}%
+            </div>
+          ) : null
+        )}
+      </div>
+      <div className="flex justify-between mt-3 text-xs text-[#6B6B6B]">
+        {items.map((item) => (
+          <span key={item.key}>{item.label}</span>
+        ))}
+      </div>
+    </>
   );
 }
 

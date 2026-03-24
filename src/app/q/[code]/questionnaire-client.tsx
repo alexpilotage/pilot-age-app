@@ -113,7 +113,6 @@ export function QuestionnaireClient({ code }: { code: string }) {
     }
   }, [code, answers]);
 
-  // Loading state
   if (loading) {
     return (
       <div className="text-center py-20">
@@ -123,7 +122,6 @@ export function QuestionnaireClient({ code }: { code: string }) {
     );
   }
 
-  // Error state
   if (error && !questions.length) {
     return (
       <div className="text-center py-20">
@@ -138,15 +136,11 @@ export function QuestionnaireClient({ code }: { code: string }) {
     );
   }
 
-  // Already answered
   if (alreadyAnswered) {
     return (
       <div className="text-center py-20">
         <span className="text-5xl mb-4 block">✅</span>
-        <h2
-          className="text-2xl font-bold text-[#181818] mb-4"
-          style= fontFamily: "var(--font-playfair)" 
-        >
+        <h2 className="text-2xl font-bold text-[#181818] mb-4 font-[family-name:var(--font-playfair)]">
           Vous avez déjà répondu
         </h2>
         <p className="text-[#6B6B6B]">
@@ -156,14 +150,10 @@ export function QuestionnaireClient({ code }: { code: string }) {
     );
   }
 
-  // Show result
   if (result) {
     return (
       <div>
-        <h1
-          className="text-3xl font-bold text-[#181818] mb-8 text-center"
-          style= fontFamily: "var(--font-playfair)" 
-        >
+        <h1 className="text-3xl font-bold text-[#181818] mb-8 text-center font-[family-name:var(--font-playfair)]">
           Votre résultat
         </h1>
         <ResultCard score={result.score} profileType={result.profile_type} />
@@ -174,7 +164,6 @@ export function QuestionnaireClient({ code }: { code: string }) {
     );
   }
 
-  // Questionnaire form
   const currentQuestion = questions[currentIndex];
   const currentAnswer = answers[currentQuestion?.id];
   const isLastQuestion = currentIndex === questions.length - 1;
@@ -182,12 +171,8 @@ export function QuestionnaireClient({ code }: { code: string }) {
 
   return (
     <div>
-      {/* Welcome */}
       <div className="text-center mb-10">
-        <h1
-          className="text-3xl font-bold text-[#181818] mb-3"
-          style= fontFamily: "var(--font-playfair)" 
-        >
+        <h1 className="text-3xl font-bold text-[#181818] mb-3 font-[family-name:var(--font-playfair)]">
           Êtes-vous aidant(e) ?
         </h1>
         <p className="text-[#6B6B6B]">
@@ -195,12 +180,10 @@ export function QuestionnaireClient({ code }: { code: string }) {
         </p>
       </div>
 
-      {/* Progress */}
       <div className="mb-8">
         <ProgressBar current={currentIndex + 1} total={questions.length} />
       </div>
 
-      {/* Question */}
       <AnimatePresence mode="wait">
         <QuestionCard
           key={currentQuestion.id}
@@ -211,7 +194,6 @@ export function QuestionnaireClient({ code }: { code: string }) {
         />
       </AnimatePresence>
 
-      {/* Navigation */}
       <div className="flex justify-between mt-8">
         <button
           onClick={handlePrev}
@@ -240,7 +222,6 @@ export function QuestionnaireClient({ code }: { code: string }) {
         )}
       </div>
 
-      {/* Error display */}
       {error && (
         <p className="text-red-600 text-sm text-center mt-4">{error}</p>
       )}

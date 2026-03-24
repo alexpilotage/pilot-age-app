@@ -23,7 +23,7 @@ export function ProgressBar({ current, total }: ProgressBarProps) {
       <div className="w-full h-2 bg-[#E8E8E6] rounded-full overflow-hidden">
         <motion.div
           className="h-full bg-[#FFCF02] rounded-full"
-          initial= width: 0 
+          initial={false}
           animate={{ width: `${percentage}%` }}
           transition= duration: 0.4, ease: "easeOut" 
         />

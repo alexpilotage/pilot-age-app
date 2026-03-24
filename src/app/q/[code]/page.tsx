@@ -15,10 +15,7 @@ export default async function QuestionnairePage({
           <div className="w-8 h-8 bg-[#FFCF02] rounded-lg flex items-center justify-center">
             <span className="font-black text-[#181818] text-sm">P</span>
           </div>
-          <span
-            className="text-lg font-bold text-[#181818]"
-            style= fontFamily: "var(--font-playfair)" 
-          >
+          <span className="text-lg font-bold text-[#181818] font-[family-name:var(--font-playfair)]">
             Pilot-Âge
           </span>
         </div>

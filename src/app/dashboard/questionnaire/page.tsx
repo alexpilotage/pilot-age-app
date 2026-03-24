@@ -57,17 +57,13 @@ export default function QuestionnaireDashboard() {
 
   return (
     <div className="space-y-8">
-      {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1
-            className="text-2xl font-bold text-[#181818]"
-            style= fontFamily: "var(--font-playfair)" 
-          >
+          <h1 className="text-2xl font-bold text-[#181818] font-[family-name:var(--font-playfair)]">
             Questionnaires
           </h1>
           <p className="text-[#6B6B6B] mt-1">
-            G\u00e9rez vos sessions de questionnaire aidants
+            Gérez vos sessions de questionnaire aidants
           </p>
         </div>
         <button
@@ -76,11 +72,10 @@ export default function QuestionnaireDashboard() {
           className="flex items-center gap-2 px-5 py-2.5 bg-[#FFCF02] text-[#181818] font-semibold rounded-xl hover:bg-[#e6ba00] transition-all disabled:opacity-50"
         >
           <Plus size={18} />
-          {creating ? "Cr\u00e9ation..." : "Nouvelle session"}
+          {creating ? "Création..." : "Nouvelle session"}
         </button>
       </div>
 
-      {/* Sessions list */}
       {loading ? (
         <div className="text-center py-20">
           <div className="w-10 h-10 border-4 border-[#FFCF02] border-t-transparent rounded-full animate-spin mx-auto" />
@@ -92,7 +87,7 @@ export default function QuestionnaireDashboard() {
             Aucune session
           </h3>
           <p className="text-[#6B6B6B] mb-6">
-            Cr\u00e9ez votre premi\u00e8re session pour d\u00e9ployer le questionnaire
+            Créez votre première session pour déployer le questionnaire
           </p>
           <button
             onClick={createSession}
@@ -100,7 +95,7 @@ export default function QuestionnaireDashboard() {
             className="px-6 py-3 bg-[#FFCF02] text-[#181818] font-semibold rounded-xl hover:bg-[#e6ba00] transition-all"
           >
             <Plus size={18} className="inline mr-2" />
-            Cr\u00e9er une session
+            Créer une session
           </button>
         </div>
       ) : (
@@ -135,9 +130,7 @@ export default function QuestionnaireDashboard() {
                       </span>
                       <span className="flex items-center gap-1">
                         <Calendar size={14} />
-                        {new Date(session.created_at).toLocaleDateString(
-                          "fr-FR"
-                        )}
+                        {new Date(session.created_at).toLocaleDateString("fr-FR")}
                       </span>
                     </div>
                   </div>

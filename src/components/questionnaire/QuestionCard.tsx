@@ -16,6 +16,12 @@ interface QuestionCardProps {
   index: number;
 }
 
+const cardVariants = {
+  enter: { opacity: 0, x: 40 },
+  center: { opacity: 1, x: 0 },
+  exit: { opacity: 0, x: -40 },
+};
+
 export function QuestionCard({
   question,
   answer,
@@ -25,9 +31,10 @@ export function QuestionCard({
   return (
     <motion.div
       key={question.id}
-      initial= opacity: 0, x: 40 
-      animate= opacity: 1, x: 0 
-      exit= opacity: 0, x: -40 
+      variants={cardVariants}
+      initial="enter"
+      animate="center"
+      exit="exit"
       transition= duration: 0.3 
       className="bg-white rounded-2xl p-8 shadow-sm border border-[#E8E8E6]"
     >
