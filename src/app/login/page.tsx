@@ -17,7 +17,7 @@ export default function LoginPage() {
     setLoading(true);
     setError(null);
 
-    const { error } = await supabase.auth.signInWithPassword({
+    const { data, error } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
@@ -28,8 +28,28 @@ export default function LoginPage() {
       return;
     }
 
-    // Redirect will be handled by middleware
-    window.location.href = "/";
+    // Fetch user profile to redirect based on role
+    if (data.user) {
+      const { data: profile } = await supabase
+        .from("profiles")
+        .select("role")
+        .eq("id", data.user.id)
+        .single();
+
+      if (profile?.role === "super_admin") {
+        window.location.href = "/admin";
+        return;
+      } else if (profile?.role === "admin_entreprise") {
+        window.location.href = "/dashboard";
+        return;
+      } else if (profile?.role === "salarie") {
+        window.location.href = "/espace";
+        return;
+      }
+    }
+
+    // Fallback
+    window.location.href = "/dashboard";
   }
 
   async function handleGoogleLogin() {
@@ -37,7 +57,7 @@ export default function LoginPage() {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: `${window.location.origin}/auth/callback`,
+        redirectTo: window.location.origin + "/auth/callback",
       },
     });
     if (error) {
@@ -52,10 +72,10 @@ export default function LoginPage() {
         {/* Header */}
         <div className="text-center">
           <h1 className="text-3xl font-bold tracking-tight">
-            Pilot-<span className="text-primary">Âge</span>
+            Pilot-<span className="text-primary">&Acirc;ge</span>
           </h1>
           <p className="mt-2 text-sm text-muted-foreground">
-            Connectez-vous à votre espace
+            Connectez-vous &agrave; votre espace
           </p>
         </div>
 
@@ -127,7 +147,7 @@ export default function LoginPage() {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="••••••••"
+              placeholder="&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;"
               required
               className="w-full rounded-lg border border-input bg-card px-3 py-2.5 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
             />
@@ -148,7 +168,7 @@ export default function LoginPage() {
 
         <p className="text-center text-sm text-muted-foreground">
           <Link href="/" className="text-primary hover:underline">
-            ← Retour à l&apos;accueil
+            &larr; Retour &agrave; l&apos;accueil
           </Link>
         </p>
       </div>
