@@ -28,7 +28,6 @@ export default function LoginPage() {
       return;
     }
 
-    // Redirect will be handled by middleware
     window.location.href = "/";
   }
 
@@ -49,17 +48,15 @@ export default function LoginPage() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
       <div className="w-full max-w-sm space-y-8">
-        {/* Header */}
         <div className="text-center">
           <h1 className="text-3xl font-bold tracking-tight">
-            Pilot-<span className="text-primary">\u00c2ge</span>
+            Pilot-<span className="text-primary">Âge</span>
           </h1>
           <p className="mt-2 text-sm text-muted-foreground">
-            Connectez-vous \u00e0 votre espace
+            Connectez-vous à votre espace
           </p>
         </div>
 
-        {/* Google OAuth */}
         <button
           onClick={handleGoogleLogin}
           disabled={loading}
@@ -86,7 +83,6 @@ export default function LoginPage() {
           Continuer avec Google
         </button>
 
-        {/* Divider */}
         <div className="relative">
           <div className="absolute inset-0 flex items-center">
             <div className="w-full border-t border-border" />
@@ -96,7 +92,6 @@ export default function LoginPage() {
           </div>
         </div>
 
-        {/* Email/Password form */}
         <form onSubmit={handleEmailLogin} className="space-y-4">
           <div>
             <label
@@ -127,7 +122,7 @@ export default function LoginPage() {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022"
+              placeholder="••••••••"
               required
               className="w-full rounded-lg border border-input bg-card px-3 py-2.5 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
             />
@@ -148,19 +143,18 @@ export default function LoginPage() {
 
         <p className="text-center text-sm text-muted-foreground">
           <Link href="/" className="text-primary hover:underline">
-            \u2190 Retour \u00e0 l&apos;accueil
+            ← Retour à l&apos;accueil
           </Link>
         </p>
 
-        {/* Dev mode quick access */}
         {process.env.NODE_ENV === "development" && (
           <div className="rounded-lg border border-dashed border-orange-300 bg-orange-50 p-3 text-center">
-            <p className="text-xs font-medium text-orange-700">\u26a0\ufe0f Mode d\u00e9veloppement</p>
+            <p className="text-xs font-medium text-orange-700">⚠️ Mode développement</p>
             <Link
               href="/dev-login"
               className="mt-1 inline-block text-sm font-semibold text-orange-700 underline hover:text-orange-900"
             >
-              Connexion rapide par r\u00f4le \u2192
+              Connexion rapide par rôle →
             </Link>
           </div>
         )}
