@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { ChevronUp, ChevronDown, Pencil, Trash2, Eye, EyeOff } from "lucide-react";
 
 interface Question {
   id: string;
@@ -122,18 +123,18 @@ export function QuestionList() {
               <button
                 onClick={() => moveQuestion(index, "up")}
                 disabled={index === 0 || reordering}
-                className="text-muted-foreground hover:text-foreground disabled:opacity-20 text-xs"
+                className="text-muted-foreground hover:text-foreground disabled:opacity-20"
                 title="Monter"
               >
-                \u25b2
+                <ChevronUp className="h-4 w-4" />
               </button>
               <button
                 onClick={() => moveQuestion(index, "down")}
                 disabled={index === questions.length - 1 || reordering}
-                className="text-muted-foreground hover:text-foreground disabled:opacity-20 text-xs"
+                className="text-muted-foreground hover:text-foreground disabled:opacity-20"
                 title="Descendre"
               >
-                \u25bc
+                <ChevronDown className="h-4 w-4" />
               </button>
             </div>
 
@@ -174,24 +175,28 @@ export function QuestionList() {
             <div className="flex items-center gap-1">
               <button
                 onClick={() => toggleActive(question)}
-                className="rounded-lg p-2 text-sm text-muted-foreground hover:bg-muted transition-colors"
+                className="rounded-lg p-2 text-muted-foreground hover:bg-muted transition-colors"
                 title={question.is_active ? "D\u00e9sactiver" : "Activer"}
               >
-                {question.is_active ? "\ud83d\udc41" : "\ud83d\udc41\u200d\ud83d\udde8"}
+                {question.is_active ? (
+                  <Eye className="h-4 w-4" />
+                ) : (
+                  <EyeOff className="h-4 w-4" />
+                )}
               </button>
               <Link
                 href={"/admin/questions/" + question.id + "/edit"}
-                className="rounded-lg p-2 text-sm text-muted-foreground hover:bg-muted transition-colors"
+                className="rounded-lg p-2 text-muted-foreground hover:bg-muted transition-colors"
                 title="Modifier"
               >
-                \u270f\ufe0f
+                <Pencil className="h-4 w-4" />
               </Link>
               <button
                 onClick={() => deleteQuestion(question.id)}
-                className="rounded-lg p-2 text-sm text-red-500 hover:bg-red-50 transition-colors"
+                className="rounded-lg p-2 text-red-500 hover:bg-red-50 transition-colors"
                 title="Supprimer"
               >
-                \ud83d\uddd1
+                <Trash2 className="h-4 w-4" />
               </button>
             </div>
           </div>
