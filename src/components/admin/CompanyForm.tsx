@@ -80,11 +80,11 @@ export function CompanyForm({ company }: CompanyFormProps) {
 
       <div>
         <h1 className="text-2xl font-bold">
-          {isEditing ? "Modifier l\u0027entreprise" : "Nouvelle entreprise"}
+          {isEditing ? "Modifier l'entreprise" : "Nouvelle entreprise"}
         </h1>
         <p className="mt-1 text-sm text-muted-foreground">
           {isEditing
-            ? "Modifiez les informations de l\u0027entreprise"
+            ? "Modifiez les informations de l'entreprise"
             : "Enregistrez une nouvelle entreprise cliente"}
         </p>
       </div>
@@ -183,7 +183,7 @@ export function CompanyForm({ company }: CompanyFormProps) {
             className="inline-flex items-center gap-2 rounded-[100px] bg-primary px-6 py-2.5 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary-hover disabled:opacity-50"
           >
             {loading && <Loader2 className="h-4 w-4 animate-spin" />}
-            {isEditing ? "Enregistrer" : "Créer l\u0027entreprise"}
+            {isEditing ? "Enregistrer" : "Créer l'entreprise"}
           </button>
         </div>
       </form>
