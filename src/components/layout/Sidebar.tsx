@@ -135,7 +135,7 @@ export function Sidebar({ role, userName, organizationName, isOpen, onToggle }: 
           </div>
           {isOpen && (
             <span className="text-base font-bold text-[#181818] whitespace-nowrap">
-              pilot-<span className="text-[#FFCF02]">{âge}</span>
+              pilot-<span className="text-[#FFCF02]">âge</span>
             </span>
           )}
         </div>
@@ -202,9 +202,6 @@ export function Sidebar({ role, userName, organizationName, isOpen, onToggle }: 
                         {item.badge}
                       </span>
                     ) : null}
-                    {!isOpen && isActive && (
-                      <span className="absolute left-0 h-6 w-1 rounded-r-full bg-[#FFCF02]" />
-                    )}
                   </Link>
                 );
               })}
