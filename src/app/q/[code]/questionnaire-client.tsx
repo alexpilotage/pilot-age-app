@@ -39,13 +39,36 @@ export function QuestionnaireClient({ code }: { code: string }) {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [alreadyAnswered, setAlreadyAnswered] = useState(false);
+  const [orgName, setOrgName] = useState<string | null>(null);
 
   useEffect(() => {
     async function load() {
       try {
+        // Step 1: Validate the session code
+        const validateRes = await fetch(`/api/questionnaire/validate?code=${encodeURIComponent(code)}`);
+        const validateData = await validateRes.json();
+
+        if (!validateRes.ok || !validateData.valid) {
+          setError(validateData.reason || "Session introuvable ou expirée.");
+          setLoading(false);
+          return;
+        }
+
+        if (validateData.organization_name) {
+          setOrgName(validateData.organization_name);
+        }
+
+        // Step 2: Load questions
         const res = await fetch("/api/questionnaire/questions");
         if (!res.ok) throw new Error("Impossible de charger les questions");
         const data = await res.json();
+
+        if (!data || data.length === 0) {
+          setError("Aucune question n'est disponible pour le moment. Veuillez contacter votre entreprise.");
+          setLoading(false);
+          return;
+        }
+
         setQuestions(data);
       } catch {
         setError("Impossible de charger le questionnaire. Veuillez réessayer.");
@@ -54,7 +77,7 @@ export function QuestionnaireClient({ code }: { code: string }) {
       }
     }
     load();
-  }, []);
+  }, [code]);
 
   const handleAnswer = useCallback(
     (value: unknown) => {
@@ -125,6 +148,7 @@ export function QuestionnaireClient({ code }: { code: string }) {
   if (error && !questions.length) {
     return (
       <div className="text-center py-20">
+        <span className="text-5xl mb-4 block">⚠️</span>
         <p className="text-red-600 text-lg mb-4">{error}</p>
         <button
           onClick={() => window.location.reload()}
@@ -165,7 +189,15 @@ export function QuestionnaireClient({ code }: { code: string }) {
   }
 
   const currentQuestion = questions[currentIndex];
-  const currentAnswer = answers[currentQuestion?.id];
+  if (!currentQuestion) {
+    return (
+      <div className="text-center py-20">
+        <p className="text-[#6B6B6B]">Erreur de chargement. Veuillez rafraîchir la page.</p>
+      </div>
+    );
+  }
+
+  const currentAnswer = answers[currentQuestion.id];
   const isLastQuestion = currentIndex === questions.length - 1;
   const hasAnswer = currentAnswer !== undefined && currentAnswer !== null;
 
@@ -178,6 +210,11 @@ export function QuestionnaireClient({ code }: { code: string }) {
         <p className="text-[#6B6B6B]">
           Répondez à ces quelques questions pour le découvrir.
         </p>
+        {orgName && (
+          <p className="text-sm text-[#6B6B6B] mt-2">
+            Questionnaire proposé par <span className="font-medium text-[#181818]">{orgName}</span>
+          </p>
+        )}
       </div>
 
       <div className="mb-8">
