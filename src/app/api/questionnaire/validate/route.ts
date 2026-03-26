@@ -13,38 +13,46 @@ export async function GET(request: NextRequest) {
     );
   }
 
-  const supabase = createAdminClient();
+  try {
+    const supabase = createAdminClient();
 
-  const { data: session, error } = await supabase
-    .from("questionnaire_sessions")
-    .select("id, code, status, organization_id")
-    .eq("code", code)
-    .single();
+    const { data: session, error } = await supabase
+      .from("questionnaire_sessions")
+      .select("id, code, status, organization_id")
+      .eq("code", code)
+      .single();
 
-  if (error || !session) {
+    if (error || !session) {
+      return NextResponse.json(
+        { valid: false, reason: "Session introuvable" },
+        { status: 404 }
+      );
+    }
+
+    if (session.status !== "active") {
+      return NextResponse.json(
+        { valid: false, reason: "Cette session n'est plus active" },
+        { status: 403 }
+      );
+    }
+
+    // Get organization name for display
+    const { data: org } = await supabase
+      .from("organizations")
+      .select("name")
+      .eq("id", session.organization_id)
+      .single();
+
+    return NextResponse.json({
+      valid: true,
+      session_id: session.id,
+      organization_name: org?.name || null,
+    });
+  } catch (err) {
+    console.error("[validate] Error:", err);
     return NextResponse.json(
-      { valid: false, reason: "Session introuvable" },
-      { status: 404 }
+      { error: err instanceof Error ? err.message : "Erreur serveur" },
+      { status: 500 }
     );
   }
-
-  if (session.status !== "active") {
-    return NextResponse.json(
-      { valid: false, reason: "Cette session n'est plus active" },
-      { status: 403 }
-    );
-  }
-
-  // Get organization name for display
-  const { data: org } = await supabase
-    .from("organizations")
-    .select("name")
-    .eq("id", session.organization_id)
-    .single();
-
-  return NextResponse.json({
-    valid: true,
-    session_id: session.id,
-    organization_name: org?.name || null,
-  });
 }

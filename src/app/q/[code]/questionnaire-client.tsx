@@ -46,9 +46,22 @@ export function QuestionnaireClient({ code }: { code: string }) {
       try {
         // Step 1: Validate the session code
         const validateRes = await fetch(`/api/questionnaire/validate?code=${encodeURIComponent(code)}`);
-        const validateData = await validateRes.json();
 
-        if (!validateRes.ok || !validateData.valid) {
+        if (!validateRes.ok) {
+          let reason = "Session introuvable ou expirée.";
+          try {
+            const data = await validateRes.json();
+            reason = data.reason || data.error || reason;
+          } catch {
+            // Response wasn't JSON
+          }
+          setError(reason);
+          setLoading(false);
+          return;
+        }
+
+        const validateData = await validateRes.json();
+        if (!validateData.valid) {
           setError(validateData.reason || "Session introuvable ou expirée.");
           setLoading(false);
           return;
@@ -59,18 +72,32 @@ export function QuestionnaireClient({ code }: { code: string }) {
         }
 
         // Step 2: Load questions
-        const res = await fetch("/api/questionnaire/questions");
-        if (!res.ok) throw new Error("Impossible de charger les questions");
-        const data = await res.json();
+        const questionsRes = await fetch("/api/questionnaire/questions");
 
-        if (!data || data.length === 0) {
+        if (!questionsRes.ok) {
+          let reason = "Impossible de charger les questions.";
+          try {
+            const data = await questionsRes.json();
+            reason = data.error || reason;
+          } catch {
+            // Response wasn't JSON
+          }
+          setError(reason);
+          setLoading(false);
+          return;
+        }
+
+        const questionsData = await questionsRes.json();
+
+        if (!questionsData || questionsData.length === 0) {
           setError("Aucune question n'est disponible pour le moment. Veuillez contacter votre entreprise.");
           setLoading(false);
           return;
         }
 
-        setQuestions(data);
-      } catch {
+        setQuestions(questionsData);
+      } catch (err) {
+        console.error("Questionnaire load error:", err);
         setError("Impossible de charger le questionnaire. Veuillez réessayer.");
       } finally {
         setLoading(false);
