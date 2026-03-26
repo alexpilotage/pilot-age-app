@@ -2,89 +2,99 @@ import { NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 
 // POST — Submit anonymous questionnaire response
-// Uses admin client to bypass RLS (anonymous users)
+// Public endpoint — uses admin client to bypass RLS (anonymous users)
 export async function POST(request: Request) {
-  const supabase = createAdminClient();
-  const body = await request.json();
-  const { session_code, answers, respondent_token } = body;
+  try {
+    const supabase = createAdminClient();
+    const body = await request.json();
+    const { session_code, answers, respondent_token } = body;
 
-  if (!session_code || !answers || !respondent_token) {
+    if (!session_code || !answers || !respondent_token) {
+      return NextResponse.json(
+        { error: "Données manquantes" },
+        { status: 400 }
+      );
+    }
+
+    // Find active session
+    const { data: session, error: sessionError } = await supabase
+      .from("questionnaire_sessions")
+      .select("id, status")
+      .eq("code", session_code)
+      .single();
+
+    if (sessionError || !session) {
+      console.error("[respond] Session lookup error:", sessionError);
+      return NextResponse.json(
+        { error: `Session non trouvée (code: ${session_code})${sessionError ? " — " + sessionError.message : ""}` },
+        { status: 404 }
+      );
+    }
+
+    if (session.status !== "active") {
+      return NextResponse.json(
+        { error: "Cette session n'est plus active" },
+        { status: 403 }
+      );
+    }
+
+    // Check if respondent already answered
+    const { data: existing } = await supabase
+      .from("questionnaire_responses")
+      .select("id")
+      .eq("session_id", session.id)
+      .eq("respondent_token", respondent_token)
+      .maybeSingle();
+
+    if (existing) {
+      return NextResponse.json(
+        { error: "Vous avez déjà répondu à ce questionnaire" },
+        { status: 409 }
+      );
+    }
+
+    // Get questions for scoring
+    const { data: questions } = await supabase
+      .from("questions")
+      .select("id, weight, type, options")
+      .eq("is_active", true);
+
+    // Calculate score
+    const score = calculateScore(answers, questions || []);
+    const profile_type = determineProfileType(score);
+
+    const { data: response, error } = await supabase
+      .from("questionnaire_responses")
+      .insert({
+        session_id: session.id,
+        respondent_token,
+        answers,
+        score,
+        profile_type,
+      })
+      .select()
+      .single();
+
+    if (error) {
+      console.error("[respond] Insert error:", error);
+      return NextResponse.json({ error: error.message }, { status: 500 });
+    }
+
     return NextResponse.json(
-      { error: "Données manquantes" },
-      { status: 400 }
+      {
+        score,
+        profile_type,
+        id: response.id,
+      },
+      { status: 201 }
+    );
+  } catch (err) {
+    console.error("[respond] Unexpected error:", err);
+    return NextResponse.json(
+      { error: err instanceof Error ? err.message : "Erreur serveur" },
+      { status: 500 }
     );
   }
-
-  // Find active session
-  const { data: session, error: sessionError } = await supabase
-    .from("questionnaire_sessions")
-    .select("id, status")
-    .eq("code", session_code)
-    .single();
-
-  if (sessionError || !session) {
-    return NextResponse.json(
-      { error: "Session non trouvée" },
-      { status: 404 }
-    );
-  }
-
-  if (session.status !== "active") {
-    return NextResponse.json(
-      { error: "Cette session n'est plus active" },
-      { status: 403 }
-    );
-  }
-
-  // Check if respondent already answered
-  const { data: existing } = await supabase
-    .from("questionnaire_responses")
-    .select("id")
-    .eq("session_id", session.id)
-    .eq("respondent_token", respondent_token)
-    .maybeSingle();
-
-  if (existing) {
-    return NextResponse.json(
-      { error: "Vous avez déjà répondu à ce questionnaire" },
-      { status: 409 }
-    );
-  }
-
-  // Get questions for scoring
-  const { data: questions } = await supabase
-    .from("questions")
-    .select("id, weight, type, options")
-    .eq("is_active", true);
-
-  // Calculate score
-  const score = calculateScore(answers, questions || []);
-  const profile_type = determineProfileType(score);
-
-  const { data: response, error } = await supabase
-    .from("questionnaire_responses")
-    .insert({
-      session_id: session.id,
-      respondent_token,
-      answers,
-      score,
-      profile_type,
-    })
-    .select()
-    .single();
-
-  if (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
-  }
-
-  return NextResponse.json(
-    {
-      score,
-      profile_type,
-      id: response.id,
-    },
-    { status: 201 }
-  );
 }
 
 function calculateScore(

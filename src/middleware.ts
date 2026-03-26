@@ -9,6 +9,9 @@ const PUBLIC_ROUTES = ["/", "/login", "/register", "/auth/callback", "/dev-login
 // Routes accessible via QR code (anonymous)
 const QUESTIONNAIRE_ROUTE = /^\/q\/[a-zA-Z0-9-]+/;
 
+// Public API routes (anonymous questionnaire access)
+const PUBLIC_API_ROUTES = /^\/api\/questionnaire\//;
+
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
@@ -17,9 +20,14 @@ export async function middleware(request: NextRequest) {
     return await updateSession(request);
   }
 
-  // Allow anonymous questionnaire access
+  // Allow anonymous questionnaire access (pages)
   if (QUESTIONNAIRE_ROUTE.test(pathname)) {
     return await updateSession(request);
+  }
+
+  // Allow anonymous questionnaire API access
+  if (PUBLIC_API_ROUTES.test(pathname)) {
+    return NextResponse.next({ request });
   }
 
   // === DEV MODE: bypass auth with dev-role cookie ===
