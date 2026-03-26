@@ -7,11 +7,11 @@ import { ArrowLeft, Loader2 } from "lucide-react";
 import type { Organization, SizeRange } from "@/types";
 
 const SIZE_OPTIONS: { value: SizeRange; label: string }[] = [
-  { value: "1-50", label: "1 \u00e0 50 salari\u00e9s" },
-  { value: "51-200", label: "51 \u00e0 200 salari\u00e9s" },
-  { value: "201-500", label: "201 \u00e0 500 salari\u00e9s" },
-  { value: "501-1000", label: "501 \u00e0 1 000 salari\u00e9s" },
-  { value: "1001+", label: "Plus de 1 000 salari\u00e9s" },
+  { value: "1-50", label: "1 à 50 salariés" },
+  { value: "51-200", label: "51 à 200 salariés" },
+  { value: "201-500", label: "201 à 500 salariés" },
+  { value: "501-1000", label: "501 à 1 000 salariés" },
+  { value: "1001+", label: "Plus de 1 000 salariés" },
 ];
 
 interface CompanyFormProps {
@@ -80,11 +80,11 @@ export function CompanyForm({ company }: CompanyFormProps) {
 
       <div>
         <h1 className="text-2xl font-bold">
-          {isEditing ? "Modifier l\u2019entreprise" : "Nouvelle entreprise"}
+          {isEditing ? "Modifier l\u0027entreprise" : "Nouvelle entreprise"}
         </h1>
         <p className="mt-1 text-sm text-muted-foreground">
           {isEditing
-            ? "Modifiez les informations de l\u2019entreprise"
+            ? "Modifiez les informations de l\u0027entreprise"
             : "Enregistrez une nouvelle entreprise cliente"}
         </p>
       </div>
@@ -183,7 +183,7 @@ export function CompanyForm({ company }: CompanyFormProps) {
             className="inline-flex items-center gap-2 rounded-[100px] bg-primary px-6 py-2.5 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary-hover disabled:opacity-50"
           >
             {loading && <Loader2 className="h-4 w-4 animate-spin" />}
-            {isEditing ? "Enregistrer" : "Cr\u00e9er l\u2019entreprise"}
+            {isEditing ? "Enregistrer" : "Créer l\u0027entreprise"}
           </button>
         </div>
       </form>

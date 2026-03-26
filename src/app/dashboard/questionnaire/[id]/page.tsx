@@ -77,7 +77,7 @@ export default function SessionDetailPage({
   if (!session || !stats) {
     return (
       <div className="text-center py-20">
-        <p className="text-[#6B6B6B]">Session non trouv\u00e9e</p>
+        <p className="text-[#6B6B6B]">Session non trouvée</p>
       </div>
     );
   }
@@ -117,7 +117,7 @@ export default function SessionDetailPage({
             )}
           </div>
           <p className="text-[#6B6B6B] mt-1">
-            Cr\u00e9\u00e9e le{" "}
+            Créée le{" "}
             {new Date(session.created_at).toLocaleDateString("fr-FR", {
               day: "numeric",
               month: "long",
@@ -133,7 +133,7 @@ export default function SessionDetailPage({
             className="flex items-center gap-2 px-5 py-2.5 bg-red-50 text-red-600 font-medium rounded-xl hover:bg-red-100 transition-all"
           >
             <XCircle size={18} />
-            {closing ? "Fermeture..." : "Cl\u00f4turer la session"}
+            {closing ? "Fermeture..." : "Clôturer la session"}
           </button>
         )}
       </div>
@@ -154,7 +154,7 @@ export default function SessionDetailPage({
             className="mx-auto rounded-xl"
           />
           <p className="text-sm text-[#6B6B6B] mt-4">
-            Imprimez ou partagez ce QR code avec vos salari\u00e9s
+            Imprimez ou partagez ce QR code avec vos salariés
           </p>
         </div>
 
@@ -184,11 +184,11 @@ export default function SessionDetailPage({
 
           <div className="mt-6 p-4 bg-[#FFCF02]/10 rounded-xl">
             <p className="text-sm font-medium text-[#181818]">
-              \ud83d\udd12 100% anonyme
+              🔒 100% anonyme
             </p>
             <p className="text-xs text-[#6B6B6B] mt-1">
-              Aucune donn\u00e9e personnelle n&apos;est collect\u00e9e. Les r\u00e9ponses sont
-              enti\u00e8rement anonymes.
+              Aucune donnée personnelle n&apos;est collectée. Les réponses sont
+              entièrement anonymes.
             </p>
           </div>
         </div>
@@ -198,11 +198,11 @@ export default function SessionDetailPage({
       <div>
         <div className="flex items-center gap-3 mb-4">
           <h2 className="text-xl font-bold text-[#181818] font-[family-name:var(--font-playfair)]">
-            R\u00e9sultats
+            Résultats
           </h2>
           {showPulse && (
             <span className="text-xs font-medium text-[#FFCF02] bg-[#FFCF02]/10 px-3 py-1 rounded-full animate-bounce">
-              +1 nouvelle r\u00e9ponse !
+              +1 nouvelle réponse !
             </span>
           )}
         </div>
@@ -234,7 +234,7 @@ export default function SessionDetailPage({
         {stats.total > 0 && (
           <div className="mt-6 bg-white rounded-2xl border border-[#E8E8E6] p-6">
             <h3 className="font-semibold text-[#181818] mb-4">
-              R\u00e9partition des profils
+              Répartition des profils
             </h3>
             <BarChart stats={stats} />
             <div className="mt-6 text-center">
@@ -251,13 +251,13 @@ export default function SessionDetailPage({
           <div className="text-center py-12 bg-white rounded-2xl border border-[#E8E8E6]">
             <Users size={40} className="mx-auto text-[#E8E8E6] mb-3" />
             <p className="text-[#6B6B6B]">
-              Aucune r\u00e9ponse pour le moment. Partagez le QR code ou le lien
-              avec vos salari\u00e9s.
+              Aucune réponse pour le moment. Partagez le QR code ou le lien
+              avec vos salariés.
             </p>
             {session.status === "active" && (
               <p className="text-xs text-green-600 mt-2 flex items-center justify-center gap-1">
                 <Radio size={12} className="animate-pulse" />
-                Les r\u00e9sultats s&apos;afficheront en temps r\u00e9el
+                Les résultats s&apos;afficheront en temps réel
               </p>
             )}
           </div>
@@ -269,9 +269,9 @@ export default function SessionDetailPage({
 
 function BarChart({ stats }: { stats: RealtimeStats }) {
   const items = [
-    { key: "aidant_probable", count: stats.aidant_probable, color: "bg-[#FFCF02]", textColor: "text-[#181818]", label: "\u2b24 Aidant probable" },
-    { key: "aidant_possible", count: stats.aidant_possible, color: "bg-orange-400", textColor: "text-white", label: "\u2b24 Aidant possible" },
-    { key: "non_aidant", count: stats.non_aidant, color: "bg-green-500", textColor: "text-white", label: "\u2b24 Non aidant" },
+    { key: "aidant_probable", count: stats.aidant_probable, color: "bg-[#FFCF02]", textColor: "text-[#181818]", label: "⬤ Aidant probable" },
+    { key: "aidant_possible", count: stats.aidant_possible, color: "bg-orange-400", textColor: "text-white", label: "⬤ Aidant possible" },
+    { key: "non_aidant", count: stats.non_aidant, color: "bg-green-500", textColor: "text-white", label: "⬤ Non aidant" },
   ];
 
   return (

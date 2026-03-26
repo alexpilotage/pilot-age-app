@@ -18,7 +18,7 @@ interface Session {
 const STATUS_LABELS: Record<string, { label: string; color: string }> = {
   draft: { label: "Brouillon", color: "bg-gray-100 text-gray-600" },
   active: { label: "Active", color: "bg-green-100 text-green-700" },
-  closed: { label: "Termin\u00e9e", color: "bg-red-100 text-red-600" },
+  closed: { label: "Terminée", color: "bg-red-100 text-red-600" },
 };
 
 export default function QuestionnaireDashboard() {
@@ -94,12 +94,12 @@ export default function QuestionnaireDashboard() {
             {hasActiveSessions && (
               <span className="inline-flex items-center gap-1.5 text-xs font-medium text-green-600 bg-green-50 px-3 py-1.5 rounded-full">
                 <Radio size={12} className="animate-pulse" />
-                Temps r\u00e9el actif
+                Temps réel actif
               </span>
             )}
           </div>
           <p className="text-[#6B6B6B] mt-1">
-            G\u00e9rez vos sessions de questionnaire aidants
+            Gérez vos sessions de questionnaire aidants
           </p>
         </div>
         <button
@@ -108,7 +108,7 @@ export default function QuestionnaireDashboard() {
           className="flex items-center gap-2 px-5 py-2.5 bg-[#FFCF02] text-[#181818] font-semibold rounded-xl hover:bg-[#e6ba00] transition-all disabled:opacity-50"
         >
           <Plus size={18} />
-          {creating ? "Cr\u00e9ation..." : "Nouvelle session"}
+          {creating ? "Création..." : "Nouvelle session"}
         </button>
       </div>
 
@@ -123,7 +123,7 @@ export default function QuestionnaireDashboard() {
             Aucune session
           </h3>
           <p className="text-[#6B6B6B] mb-6">
-            Cr\u00e9ez votre premi\u00e8re session pour d\u00e9ployer le questionnaire
+            Créez votre première session pour déployer le questionnaire
           </p>
           <button
             onClick={createSession}
@@ -131,7 +131,7 @@ export default function QuestionnaireDashboard() {
             className="px-6 py-3 bg-[#FFCF02] text-[#181818] font-semibold rounded-xl hover:bg-[#e6ba00] transition-all"
           >
             <Plus size={18} className="inline mr-2" />
-            Cr\u00e9er une session
+            Créer une session
           </button>
         </div>
       ) : (

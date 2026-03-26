@@ -27,13 +27,13 @@ const STATUS_COLORS: Record<string, string> = {
 const STATUS_LABELS: Record<string, string> = {
   trial: "Essai",
   active: "Actif",
-  expired: "Expir\u00e9",
+  expired: "Expiré",
 };
 
 const SESSION_STATUS_LABELS: Record<string, string> = {
   draft: "Brouillon",
   active: "Active",
-  closed: "Termin\u00e9e",
+  closed: "Terminée",
 };
 
 const QR_API_BASE = "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=";
@@ -185,14 +185,14 @@ export function CompanyDetail({ company }: CompanyDetailProps) {
             </div>
             <p className="text-xs text-muted-foreground">
               Partagez ce lien ou imprimez le QR code pour permettre aux
-              salari&eacute;s d&rsquo;acc&eacute;der au questionnaire.
+              salariés d&apos;accéder au questionnaire.
             </p>
             <a
               href={qrCodeUrl}
               download={"qrcode-" + company.slug + ".png"}
               className="inline-flex items-center gap-1.5 rounded-[100px] border border-border px-4 py-2 text-xs font-medium transition-colors hover:bg-muted"
             >
-              T&eacute;l&eacute;charger le QR code
+              Télécharger le QR code
             </a>
           </div>
         </div>
@@ -229,7 +229,7 @@ export function CompanyDetail({ company }: CompanyDetailProps) {
                     {new Date(session.created_at).toLocaleDateString(
                       "fr-FR"
                     )}{" "}
-                    &middot; {session.participant_count} participant
+                    · {session.participant_count} participant
                     {session.participant_count !== 1 ? "s" : ""}
                   </p>
                 </div>
@@ -260,7 +260,7 @@ export function CompanyDetail({ company }: CompanyDetailProps) {
         </h2>
         {company.users.length === 0 ? (
           <p className="text-sm text-muted-foreground">
-            Aucun utilisateur rattach&eacute;.
+            Aucun utilisateur rattaché.
           </p>
         ) : (
           <div className="space-y-2">
@@ -281,7 +281,7 @@ export function CompanyDetail({ company }: CompanyDetailProps) {
                     {u.role === "admin_entreprise"
                       ? "Administrateur"
                       : u.role === "salarie"
-                        ? "Salari\u00e9"
+                        ? "Salarié"
                         : u.role}
                   </p>
                 </div>
@@ -299,8 +299,8 @@ export function CompanyDetail({ company }: CompanyDetailProps) {
               Supprimer cette entreprise ?
             </h3>
             <p className="mt-2 text-sm text-muted-foreground">
-              Cette action est irr&eacute;versible. Toutes les sessions et
-              donn&eacute;es associ&eacute;es seront supprim&eacute;es.
+              Cette action est irréversible. Toutes les sessions et
+              données associées seront supprimées.
             </p>
             <div className="mt-6 flex items-center justify-end gap-3">
               <button

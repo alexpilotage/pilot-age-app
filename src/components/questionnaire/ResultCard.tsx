@@ -9,26 +9,26 @@ interface ResultCardProps {
 
 const PROFILES = {
   aidant_probable: {
-    title: "Vous \u00eates probablement aidant(e)",
+    title: "Vous êtes probablement aidant(e)",
     description:
-      "Vos r\u00e9ponses sugg\u00e8rent que vous jouez un r\u00f4le d\u2019aidant significatif au quotidien. Des ressources et un accompagnement adapt\u00e9 peuvent vous aider.",
-    icon: "\u2764\ufe0f",
+      "Vos réponses suggèrent que vous jouez un rôle d'aidant significatif au quotidien. Des ressources et un accompagnement adapté peuvent vous aider.",
+    icon: "❤️",
     color: "bg-[#FFCF02]",
     textColor: "text-[#181818]",
   },
   aidant_possible: {
-    title: "Vous \u00eates peut-\u00eatre aidant(e)",
+    title: "Vous êtes peut-être aidant(e)",
     description:
-      "Certaines de vos r\u00e9ponses indiquent que vous pourriez \u00eatre en situation d\u2019aidant. N\u2019h\u00e9sitez pas \u00e0 vous renseigner sur les dispositifs disponibles.",
-    icon: "\ud83e\udd14",
+      "Certaines de vos réponses indiquent que vous pourriez être en situation d'aidant. N'hésitez pas à vous renseigner sur les dispositifs disponibles.",
+    icon: "🤔",
     color: "bg-[#F7F7F5]",
     textColor: "text-[#181818]",
   },
   non_aidant: {
-    title: "Vous n\u2019\u00eates pas identifi\u00e9(e) comme aidant(e)",
+    title: "Vous n'êtes pas identifié(e) comme aidant(e)",
     description:
-      "D\u2019apr\u00e8s vos r\u00e9ponses, vous n\u2019\u00eates pas en situation d\u2019aidant actuellement. Sachez toutefois que ces situations peuvent \u00e9voluer.",
-    icon: "\u2705",
+      "D'après vos réponses, vous n'êtes pas en situation d'aidant actuellement. Sachez toutefois que ces situations peuvent évoluer.",
+    icon: "✅",
     color: "bg-[#F0F0EE]",
     textColor: "text-[#181818]",
   },
@@ -69,13 +69,13 @@ export function ResultCard({ score, profileType }: ResultCardProps) {
       {profileType !== "non_aidant" && (
         <div className="mt-8 p-6 bg-white/60 backdrop-blur rounded-xl">
           <h3 className="font-semibold text-[#181818] mb-3">
-            \ud83d\udcda Ressources utiles
+            📚 Ressources utiles
           </h3>
           <ul className="space-y-2 text-sm text-[#6B6B6B]">
-            <li>\u2022 Cong\u00e9 de proche aidant (jusqu\u2019\u00e0 3 mois renouvelable)</li>
-            <li>\u2022 Allocation journali\u00e8re du proche aidant (AJPA)</li>
-            <li>\u2022 Plateformes de r\u00e9pit dans votre d\u00e9partement</li>
-            <li>\u2022 Droit au r\u00e9pit pour les aidants</li>
+            <li>• Congé de proche aidant (jusqu'à 3 mois renouvelable)</li>
+            <li>• Allocation journalière du proche aidant (AJPA)</li>
+            <li>• Plateformes de répit dans votre département</li>
+            <li>• Droit au répit pour les aidants</li>
           </ul>
         </div>
       )}
