@@ -17,7 +17,7 @@ interface Question {
 
 const TYPE_LABELS: Record<string, string> = {
   yes_no: "Oui / Non",
-  scale: "\u00c9chelle 1-5",
+  scale: "Échelle 1-5",
   single_choice: "Choix unique",
   multiple_choice: "Choix multiple",
 };
@@ -95,7 +95,7 @@ export function QuestionList() {
     return (
       <div className="rounded-xl border border-border bg-card p-12 text-center">
         <p className="text-lg font-medium text-muted-foreground">
-          Aucune question cr\u00e9\u00e9e
+          Aucune question créée
         </p>
         <p className="mt-1 text-sm text-muted-foreground">
           Ajoutez des questions pour construire le questionnaire
@@ -107,7 +107,7 @@ export function QuestionList() {
   return (
     <div className="space-y-3">
       {reordering && (
-        <p className="text-xs text-muted-foreground animate-pulse">R\u00e9organisation...</p>
+        <p className="text-xs text-muted-foreground animate-pulse">Réorganisation...</p>
       )}
       {questions.map((question, index) => (
         <div
@@ -152,7 +152,7 @@ export function QuestionList() {
                 </span>
                 {!question.is_active && (
                   <span className="inline-flex rounded-full bg-red-100 px-2 py-0.5 text-xs text-red-600">
-                    D\u00e9sactiv\u00e9e
+                    Désactivée
                   </span>
                 )}
               </div>
@@ -176,7 +176,7 @@ export function QuestionList() {
               <button
                 onClick={() => toggleActive(question)}
                 className="rounded-lg p-2 text-muted-foreground hover:bg-muted transition-colors"
-                title={question.is_active ? "D\u00e9sactiver" : "Activer"}
+                title={question.is_active ? "Désactiver" : "Activer"}
               >
                 {question.is_active ? (
                   <Eye className="h-4 w-4" />

@@ -13,7 +13,7 @@ export default async function AdminQuestionsPage() {
         <div>
           <h1 className="text-2xl font-bold text-foreground">Questions</h1>
           <p className="text-sm text-muted-foreground">
-            G\u00e9rez les questions du questionnaire aidant
+            Gérez les questions du questionnaire aidant
           </p>
         </div>
         <a

@@ -60,7 +60,7 @@ export function SessionList() {
                 : "bg-muted text-muted-foreground hover:bg-muted/80")
             }
           >
-            {f === "all" ? "Toutes" : f === "active" ? "Actives" : "Termin\u00e9es"}
+            {f === "all" ? "Toutes" : f === "active" ? "Actives" : "Terminées"}
           </button>
         ))}
       </div>
@@ -68,16 +68,16 @@ export function SessionList() {
       {filtered.length === 0 ? (
         <div className="rounded-xl border border-border bg-card p-12 text-center">
           <p className="text-lg font-medium text-muted-foreground">
-            Aucune session trouv\u00e9e
+            Aucune session trouvée
           </p>
           <p className="mt-1 text-sm text-muted-foreground">
-            Cr\u00e9ez une session pour commencer \u00e0 collecter des r\u00e9ponses
+            Créez une session pour commencer à collecter des réponses
           </p>
         </div>
       ) : (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {filtered.map((session) => {
-            const orgName = session.organizations?.name || "\u2014";
+            const orgName = session.organizations?.name || "—";
             const isActive = session.status === "active";
             const dateStr = new Date(session.created_at).toLocaleDateString("fr-FR", {
               day: "numeric",
@@ -103,13 +103,13 @@ export function SessionList() {
                         : "bg-gray-100 text-gray-600")
                     }
                   >
-                    {isActive ? "Active" : "Termin\u00e9e"}
+                    {isActive ? "Active" : "Terminée"}
                   </span>
                 </div>
                 <p className="text-sm font-medium text-foreground mb-1">{orgName}</p>
                 <div className="flex items-center justify-between text-xs text-muted-foreground">
                   <span>{dateStr}</span>
-                  <span>{session.participant_count} r\u00e9ponse(s)</span>
+                  <span>{session.participant_count} réponse(s)</span>
                 </div>
               </Link>
             );

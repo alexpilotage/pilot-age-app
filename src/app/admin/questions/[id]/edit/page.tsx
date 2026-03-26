@@ -16,7 +16,7 @@ export default async function EditQuestionPage(props: {
       <div>
         <h1 className="text-2xl font-bold text-foreground">Modifier la question</h1>
         <p className="text-sm text-muted-foreground">
-          Modifiez le contenu et les param\u00e8tres de la question
+          Modifiez le contenu et les paramètres de la question
         </p>
       </div>
       <QuestionForm questionId={resolvedParams.id} />

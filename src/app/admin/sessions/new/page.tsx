@@ -12,7 +12,7 @@ export default async function NewSessionPage() {
       <div>
         <h1 className="text-2xl font-bold text-foreground">Nouvelle session</h1>
         <p className="text-sm text-muted-foreground">
-          Cr\u00e9ez une session de questionnaire pour une entreprise
+          Créez une session de questionnaire pour une entreprise
         </p>
       </div>
       <SessionForm />

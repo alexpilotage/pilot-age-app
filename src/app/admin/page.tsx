@@ -76,7 +76,7 @@ export default async function AdminDashboardPage() {
           </div>
           <p className="mt-2 text-3xl font-bold">{companyCount ?? 0}</p>
           <p className="mt-1 text-xs text-muted-foreground">
-            Clients enregistr\u00e9s
+            Clients enregistrés
           </p>
         </Link>
         <div className="rounded-xl border border-border bg-card p-6">
@@ -88,7 +88,7 @@ export default async function AdminDashboardPage() {
           </div>
           <p className="mt-2 text-3xl font-bold">{userCount ?? 0}</p>
           <p className="mt-1 text-xs text-muted-foreground">
-            Comptes cr\u00e9\u00e9s
+            Comptes créés
           </p>
         </div>
         <Link
@@ -105,13 +105,13 @@ export default async function AdminDashboardPage() {
             {sessionCount ?? 0}
           </p>
           <p className="mt-1 text-xs text-muted-foreground">
-            Total r\u00e9alis\u00e9es
+            Total réalisées
           </p>
         </Link>
         <div className="rounded-xl border border-border bg-card p-6">
           <div className="flex items-center justify-between">
             <p className="text-sm font-medium text-muted-foreground">
-              R\u00e9pondants
+              Répondants
             </p>
             <TrendingUp className="h-5 w-5 text-muted-foreground" />
           </div>
@@ -128,7 +128,7 @@ export default async function AdminDashboardPage() {
       <div className="rounded-xl border border-border bg-card p-6">
         <div className="mb-4 flex items-center justify-between">
           <h3 className="text-sm font-semibold">
-            Sessions r\u00e9centes
+            Sessions récentes
           </h3>
           <Link
             href="/admin/sessions"
@@ -139,13 +139,13 @@ export default async function AdminDashboardPage() {
         </div>
         {!recentSessions || recentSessions.length === 0 ? (
           <p className="text-sm text-muted-foreground">
-            Aucune session cr\u00e9\u00e9e pour le moment.
+            Aucune session créée pour le moment.
           </p>
         ) : (
           <div className="space-y-2">
             {recentSessions.map((s) => {
               const orgData = s.organizations as unknown as { name: string } | null;
-              const orgName = orgData?.name || "\u2014";
+              const orgName = orgData?.name || "—";
               const isActive = s.status === "active";
               return (
                 <Link
@@ -164,7 +164,7 @@ export default async function AdminDashboardPage() {
                   </div>
                   <div className="flex items-center gap-3">
                     <span className="text-xs text-muted-foreground">
-                      {s.participant_count} r\u00e9ponse(s)
+                      {s.participant_count} réponse(s)
                     </span>
                     <span
                       className={
@@ -174,7 +174,7 @@ export default async function AdminDashboardPage() {
                           : "bg-gray-100 text-gray-600")
                       }
                     >
-                      {isActive ? "Active" : "Termin\u00e9e"}
+                      {isActive ? "Active" : "Terminée"}
                     </span>
                   </div>
                 </Link>
@@ -188,7 +188,7 @@ export default async function AdminDashboardPage() {
       <div className="rounded-xl border border-border bg-card p-6">
         <div className="mb-4 flex items-center justify-between">
           <h3 className="text-sm font-semibold">
-            Entreprises r\u00e9centes
+            Entreprises récentes
           </h3>
           <Link
             href="/admin/companies"
@@ -199,7 +199,7 @@ export default async function AdminDashboardPage() {
         </div>
         {!recentCompanies || recentCompanies.length === 0 ? (
           <p className="text-sm text-muted-foreground">
-            Aucune entreprise enregistr\u00e9e pour le moment.
+            Aucune entreprise enregistrée pour le moment.
           </p>
         ) : (
           <div className="space-y-2">
@@ -213,7 +213,7 @@ export default async function AdminDashboardPage() {
                 ? "Essai"
                 : c.subscription_status === "active"
                   ? "Actif"
-                  : "Expir\u00e9";
+                  : "Expiré";
               return (
                 <Link
                   key={c.id}

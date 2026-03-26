@@ -72,10 +72,10 @@ export default function LoginPage() {
       <div className="w-full max-w-sm space-y-8">
         <div className="text-center">
           <h1 className="text-3xl font-bold tracking-tight">
-            Pilot-<span className="text-primary">\u00c2ge</span>
+            Pilot-<span className="text-primary">Âge</span>
           </h1>
           <p className="mt-2 text-sm text-muted-foreground">
-            Connectez-vous \u00e0 votre espace
+            Connectez-vous à votre espace
           </p>
         </div>
 
@@ -144,7 +144,7 @@ export default function LoginPage() {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022"
+              placeholder="••••••••"
               required
               className="w-full rounded-lg border border-input bg-card px-3 py-2.5 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
             />
@@ -165,7 +165,7 @@ export default function LoginPage() {
 
         <p className="text-center text-sm text-muted-foreground">
           <Link href="/" className="text-primary hover:underline">
-            \u2190 Retour \u00e0 l'accueil
+            ← Retour à l'accueil
           </Link>
         </p>
       </div>

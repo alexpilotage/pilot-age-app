@@ -43,7 +43,7 @@ export function SessionForm() {
 
     if (!res.ok) {
       const data = await res.json();
-      setError(data.error || "Erreur lors de la cr\u00e9ation");
+      setError(data.error || "Erreur lors de la création");
       setSubmitting(false);
       return;
     }
@@ -74,7 +74,7 @@ export function SessionForm() {
             required
             className="w-full rounded-lg border border-input bg-background px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
           >
-            <option value="">S\u00e9lectionnez une entreprise</option>
+            <option value="">Sélectionnez une entreprise</option>
             {orgs.map((org) => (
               <option key={org.id} value={org.id}>
                 {org.name}
@@ -85,7 +85,7 @@ export function SessionForm() {
 
         <div className="rounded-lg bg-muted/50 p-4">
           <p className="text-sm text-muted-foreground">
-            Un <strong>code unique</strong> sera g\u00e9n\u00e9r\u00e9 automatiquement pour cette session.
+            Un <strong>code unique</strong> sera généré automatiquement pour cette session.
             Vous pourrez le partager via QR code ou lien direct.
           </p>
         </div>
@@ -108,7 +108,7 @@ export function SessionForm() {
           disabled={submitting || !selectedOrg}
           className="rounded-[100px] bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary-hover disabled:opacity-50"
         >
-          {submitting ? "Cr\u00e9ation..." : "Cr\u00e9er la session"}
+          {submitting ? "Création..." : "Créer la session"}
         </button>
       </div>
     </form>

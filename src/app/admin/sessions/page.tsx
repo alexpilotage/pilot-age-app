@@ -13,7 +13,7 @@ export default async function AdminSessionsPage() {
         <div>
           <h1 className="text-2xl font-bold text-foreground">Sessions</h1>
           <p className="text-sm text-muted-foreground">
-            G\u00e9rez les sessions de questionnaire par entreprise
+            Gérez les sessions de questionnaire par entreprise
           </p>
         </div>
         <a

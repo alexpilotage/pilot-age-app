@@ -92,7 +92,7 @@ export function SessionDetail({ id }: { id: string }) {
   if (!session) {
     return (
       <div className="text-center py-12">
-        <p className="text-lg text-muted-foreground">Session non trouv\u00e9e</p>
+        <p className="text-lg text-muted-foreground">Session non trouvée</p>
       </div>
     );
   }
@@ -101,7 +101,7 @@ export function SessionDetail({ id }: { id: string }) {
   const questionnaireUrl = appUrl + "/q/" + session.code;
   const qrUrl = "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=" + encodeURIComponent(questionnaireUrl);
   const isActive = session.status === "active";
-  const orgName = session.organizations?.name || "\u2014";
+  const orgName = session.organizations?.name || "—";
 
   // Stats
   const totalResponses = session.responses.length;
@@ -121,7 +121,7 @@ export function SessionDetail({ id }: { id: string }) {
             href="/admin/sessions"
             className="text-sm text-muted-foreground hover:text-foreground transition-colors"
           >
-            \u2190 Retour aux sessions
+            ← Retour aux sessions
           </Link>
           <h1 className="mt-2 text-2xl font-bold text-foreground">
             Session {session.code}
@@ -139,7 +139,7 @@ export function SessionDetail({ id }: { id: string }) {
                 : "bg-green-100 text-green-700 hover:bg-green-200")
             }
           >
-            {isActive ? "Cl\u00f4turer" : "R\u00e9ouvrir"}
+            {isActive ? "Clôturer" : "Réouvrir"}
           </button>
           <button
             onClick={() => setShowDeleteModal(true)}
@@ -177,7 +177,7 @@ export function SessionDetail({ id }: { id: string }) {
         <div className="space-y-4">
           <div className="grid grid-cols-2 gap-4">
             <div className="rounded-xl border border-border bg-card p-4">
-              <p className="text-xs text-muted-foreground">R\u00e9ponses</p>
+              <p className="text-xs text-muted-foreground">Réponses</p>
               <p className="text-2xl font-bold text-foreground">{totalResponses}</p>
             </div>
             <div className="rounded-xl border border-border bg-card p-4">
@@ -204,7 +204,7 @@ export function SessionDetail({ id }: { id: string }) {
       {totalResponses > 0 && (
         <div className="rounded-xl border border-border bg-card overflow-hidden">
           <div className="border-b border-border px-6 py-4">
-            <h2 className="font-semibold text-foreground">R\u00e9ponses ({totalResponses})</h2>
+            <h2 className="font-semibold text-foreground">Réponses ({totalResponses})</h2>
           </div>
           <div className="overflow-x-auto">
             <table className="w-full">
@@ -251,7 +251,7 @@ export function SessionDetail({ id }: { id: string }) {
           <div className="mx-4 w-full max-w-md rounded-xl bg-card p-6 shadow-xl">
             <h3 className="text-lg font-bold text-foreground">Supprimer cette session ?</h3>
             <p className="mt-2 text-sm text-muted-foreground">
-              Toutes les r\u00e9ponses associ\u00e9es seront supprim\u00e9es. Cette action est irr\u00e9versible.
+              Toutes les réponses associées seront supprimées. Cette action est irréversible.
             </p>
             <div className="mt-6 flex justify-end gap-3">
               <button

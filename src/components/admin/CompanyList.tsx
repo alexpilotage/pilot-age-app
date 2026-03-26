@@ -25,7 +25,7 @@ const STATUS_COLORS: Record<string, string> = {
 const STATUS_LABELS: Record<string, string> = {
   trial: "Essai",
   active: "Actif",
-  expired: "Expir\u00e9",
+  expired: "Expiré",
 };
 
 export function CompanyList({
@@ -49,9 +49,7 @@ export function CompanyList({
         <div>
           <h1 className="text-2xl font-bold">Entreprises</h1>
           <p className="mt-1 text-sm text-muted-foreground">
-            {initialCompanies.length} entreprise
-            {initialCompanies.length !== 1 ? "s" : ""} enregistr\u00e9e
-            {initialCompanies.length !== 1 ? "s" : ""}
+            {initialCompanies.length} entreprise{initialCompanies.length !== 1 ? "s" : ""} enregistrée{initialCompanies.length !== 1 ? "s" : ""}
           </p>
         </div>
         <Link
@@ -81,8 +79,8 @@ export function CompanyList({
           <Building2 className="mx-auto h-10 w-10 text-muted-foreground/40" />
           <p className="mt-3 text-sm text-muted-foreground">
             {search
-              ? "Aucun r\u00e9sultat pour cette recherche"
-              : "Aucune entreprise enregistr\u00e9e"}
+              ? "Aucun résultat pour cette recherche"
+              : "Aucune entreprise enregistrée"}
           </p>
         </div>
       ) : (
@@ -126,8 +124,7 @@ export function CompanyList({
                   </span>
                   <span className="flex items-center gap-1">
                     <ClipboardList className="h-3.5 w-3.5" />
-                    {sessionCount} session
-                    {sessionCount !== 1 ? "s" : ""}
+                    {sessionCount} session{sessionCount !== 1 ? "s" : ""}
                   </span>
                 </div>
               </button>

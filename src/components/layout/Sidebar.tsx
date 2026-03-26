@@ -49,7 +49,7 @@ const NAV_SECTIONS: Record<UserRole, NavSection[]> = {
       title: "Ressources",
       items: [
         { label: "Centre d'aide", href: "/admin/aide", icon: HelpCircle },
-        { label: "Param\u00e8tres", href: "/admin/settings", icon: Settings },
+        { label: "Paramètres", href: "/admin/settings", icon: Settings },
       ],
     },
   ],
@@ -67,7 +67,7 @@ const NAV_SECTIONS: Record<UserRole, NavSection[]> = {
       title: "Ressources",
       items: [
         { label: "Centre d'aide", href: "/dashboard/aide", icon: HelpCircle },
-        { label: "Param\u00e8tres", href: "/dashboard/settings", icon: Settings },
+        { label: "Paramètres", href: "/dashboard/settings", icon: Settings },
       ],
     },
   ],
@@ -85,7 +85,7 @@ const NAV_SECTIONS: Record<UserRole, NavSection[]> = {
       title: "Ressources",
       items: [
         { label: "Centre d'aide", href: "/espace/aide", icon: HelpCircle },
-        { label: "Param\u00e8tres", href: "/espace/profil", icon: Settings },
+        { label: "Paramètres", href: "/espace/profil", icon: Settings },
       ],
     },
   ],
@@ -113,7 +113,7 @@ export function Sidebar({ role, userName, organizationName }: SidebarProps) {
   const roleLabels: Record<UserRole, string> = {
     super_admin: "Super Admin",
     admin_entreprise: "Admin entreprise",
-    salarie: "Salari\u00e9 aidant",
+    salarie: "Salarié aidant",
   };
 
   return (
@@ -121,7 +121,7 @@ export function Sidebar({ role, userName, organizationName }: SidebarProps) {
       {/* Logo */}
       <div className="flex h-16 items-center gap-2 px-6">
         <span className="text-xl font-bold tracking-tight">
-          pilot-<span className="text-[#FFCF02]">&acirc;ge</span>
+          pilot-<span className="text-[#FFCF02]">âge</span>
         </span>
         <span className="ml-1 text-[11px] text-white/40">Espace aidants</span>
       </div>
@@ -193,7 +193,7 @@ export function Sidebar({ role, userName, organizationName }: SidebarProps) {
           </div>
           <button
             className="rounded-lg p-1.5 text-white/40 transition-colors hover:bg-white/10 hover:text-white"
-            title="D\u00e9connexion"
+            title="Déconnexion"
           >
             <LogOut className="h-4 w-4" />
           </button>

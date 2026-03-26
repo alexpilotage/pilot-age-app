@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { X } from "lucide-react";
 
 interface QuestionFormProps {
   questionId?: string;
@@ -113,7 +114,7 @@ export function QuestionForm({ questionId }: QuestionFormProps) {
             onChange={(e) => setText(e.target.value)}
             required
             rows={3}
-            placeholder="Ex: Aidez-vous r\u00e9guli\u00e8rement un proche en situation de d\u00e9pendance ?"
+            placeholder="Ex: Aidez-vous régulièrement un proche en situation de dépendance ?"
             className="w-full rounded-lg border border-input bg-background px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-ring resize-none"
           />
         </div>
@@ -130,7 +131,7 @@ export function QuestionForm({ questionId }: QuestionFormProps) {
             className="w-full rounded-lg border border-input bg-background px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
           >
             <option value="yes_no">Oui / Non</option>
-            <option value="scale">\u00c9chelle 1-5</option>
+            <option value="scale">Échelle 1-5</option>
             <option value="single_choice">Choix unique</option>
             <option value="multiple_choice">Choix multiple</option>
           </select>
@@ -151,7 +152,7 @@ export function QuestionForm({ questionId }: QuestionFormProps) {
             className="w-32 rounded-lg border border-input bg-background px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
           />
           <p className="mt-1 text-xs text-muted-foreground">
-            Plus le poids est \u00e9lev\u00e9, plus cette question influence le score final
+            Plus le poids est élevé, plus cette question influence le score final
           </p>
         </div>
 
@@ -159,7 +160,7 @@ export function QuestionForm({ questionId }: QuestionFormProps) {
         {showOptions && (
           <div>
             <label className="mb-1.5 block text-sm font-medium">
-              Options de r\u00e9ponse
+              Options de réponse
             </label>
             <div className="space-y-2">
               {options.map((opt, i) => (
@@ -170,9 +171,9 @@ export function QuestionForm({ questionId }: QuestionFormProps) {
                   <button
                     type="button"
                     onClick={() => removeOption(i)}
-                    className="text-red-500 hover:text-red-700 text-sm px-2"
+                    className="text-red-500 hover:text-red-700 p-1"
                   >
-                    \u2715
+                    <X className="h-4 w-4" />
                   </button>
                 </div>
               ))}
@@ -220,7 +221,7 @@ export function QuestionForm({ questionId }: QuestionFormProps) {
           disabled={submitting || !text}
           className="rounded-[100px] bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary-hover disabled:opacity-50"
         >
-          {submitting ? "Enregistrement..." : isEdit ? "Enregistrer" : "Cr\u00e9er la question"}
+          {submitting ? "Enregistrement..." : isEdit ? "Enregistrer" : "Créer la question"}
         </button>
       </div>
     </form>
